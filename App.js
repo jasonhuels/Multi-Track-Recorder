@@ -29,14 +29,11 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-
-        <Text>{this.state.canRecord ? 'true' : 'false'}</Text>
         <AudioTrack canRecord={this.state.canRecord}/>
         <AudioTrack canRecord={this.state.canRecord} />
         <AudioTrack canRecord={this.state.canRecord} />
         <AudioTrack canRecord={this.state.canRecord} />
           
-
         <View style={{
           flexDirection: 'row'}}>
           <Button title="Play" />
