@@ -11,7 +11,12 @@ export default class AudioTrack extends React.Component {
 
     this.state = {
       isRecording: false,
-      isPlaying: false
+      isPlaying: false,
+      isPlaybackAllowed: false,
+      muted: false,
+      shouldCorrectPitch: true,
+      volume: 1.0,
+      rate: 1.0,
 
     };
   }
@@ -44,18 +49,42 @@ export default class AudioTrack extends React.Component {
 
   async stopRecording() {
     Alert.alert("stopped");
-    await this.recording.stopAsync();
+    await this.recording.stopAndUnloadAsync();
   }
 
   onPlayPressed = () => {
     if (this.sound != null) {
       if (this.state.isPlaying) {
-        // Pause
+        if (this.sound != null) this.sound.pauseAsync();
       } else {
-        //Play
+        this.playbackAudioTrack();
       }
     }
   };
+
+  async playbackAudioTrack() {
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      playsInSilentLockedModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
+    const { sound, status } = await this.recording.createNewLoadedSoundAsync(
+      {
+        isLooping: false,
+        isMuted: this.state.muted,
+        volume: this.state.volume,
+        rate: this.state.rate,
+        shouldCorrectPitch: this.state.shouldCorrectPitch,
+      },
+    );
+    this.sound = sound;
+    this.sound.playAsync();
+  }
 
   render(){
     return(
@@ -65,6 +94,7 @@ export default class AudioTrack extends React.Component {
         }}>
           <Button title="Rec" style={this.state.isRecording ? {backgroundColor: 'red'} : {backgroundColor: 'blue'}} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
+          <Text>{this.state.isRecording ? 'true' : 'false'}</Text>
           <Slider />
           <Button title="Play" />
         </View>
