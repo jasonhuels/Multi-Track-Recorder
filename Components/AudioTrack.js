@@ -1,11 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Dimensions, Slider } from 'react-native';
+import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react-native';
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 
 export default class AudioTrack extends React.Component {
   constructor(props) {
     super(props);
+    this.sound = null;
+    this.recording = null;
+
     this.state = {
       isRecording: false,
       isPlaying: false
@@ -14,10 +17,43 @@ export default class AudioTrack extends React.Component {
   }
 
   onRecordPressed = () => {
-    if (this.state.isRecording) {
-      // stop recording
+    if(this.state.isRecording) {
+      this.setState({
+        isRecording: false
+      });
+      this.stopRecording();
     } else {
-      // start recording
+      this.setState({
+        isRecording: true
+      });
+      this.startRecording();
+    }
+  };
+
+  async startRecording() {
+    Alert.alert("started");
+    this.recording = new Audio.Recording();
+    try {
+      await this.recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await this.recording.startAsync();
+      // You are now recording!
+    } catch (error) {
+      // An error occurred!
+    }
+  };
+
+  async stopRecording() {
+    Alert.alert("stopped");
+    await this.recording.stopAsync();
+  }
+
+  onPlayPressed = () => {
+    if (this.sound != null) {
+      if (this.state.isPlaying) {
+        // Pause
+      } else {
+        //Play
+      }
     }
   };
 
@@ -27,7 +63,7 @@ export default class AudioTrack extends React.Component {
         <View style={{
           flexDirection: 'row'
         }}>
-          <Button title="Rec" />
+          <Button title="Rec" style={this.state.isRecording ? {backgroundColor: 'red'} : {backgroundColor: 'blue'}} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
           <Slider />
           <Button title="Play" />
