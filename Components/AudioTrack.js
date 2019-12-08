@@ -13,6 +13,14 @@ export default class AudioTrack extends React.Component {
     };
   }
 
+  onRecordPressed = () => {
+    if (this.state.isRecording) {
+      // stop recording
+    } else {
+      // start recording
+    }
+  };
+
   render(){
     return(
       <View style={styles.container}>
@@ -22,6 +30,7 @@ export default class AudioTrack extends React.Component {
           <Button title="Rec" />
           {/* Playback Slider */}
           <Slider />
+          <Button title="Play" />
         </View>
         <View style={{
           flexDirection: 'row'
@@ -46,5 +55,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
+    height: 10,
   },
 });
