@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Dimensions, Slider } from 'react-native
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
+import AudioTrack from './Components/AudioTrack';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 
@@ -10,22 +11,32 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      canRecord: false,
     };
   }
+
+  componentDidMount() {
+    this.requestRecordingPermission();
+  }
+
+  requestRecordingPermission = async () => {
+    const response = await Permissions.askAsync(Permissions.AUDIO_RECORDING);
+    this.setState({
+      canRecord: response.status === 'granted',
+    });
+  };
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={{
-          flexDirection: 'row'}}>
-          <Button title="Rec" />
-          <Button title="Solo" />
-          <Button title="Mute" />
-          {/* Volume Slider */}
-          <Slider/> 
+
+        <Text>{this.state.canRecord ? 'true' : 'false'}</Text>
+        <AudioTrack canRecord={this.state.canRecord}/>
+        <AudioTrack canRecord={this.state.canRecord} />
+        <AudioTrack canRecord={this.state.canRecord} />
+        <AudioTrack canRecord={this.state.canRecord} />
           
-        </View>
+
         <View style={{
           flexDirection: 'row'}}>
           <Button title="Play" />
