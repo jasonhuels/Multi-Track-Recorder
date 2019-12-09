@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react
 import { Asset } from 'expo-asset';
 import { Audio } from 'expo-av';
 
+const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
+
 export default class AudioTrack extends React.Component {
   constructor(props) {
     super(props);
@@ -163,12 +165,15 @@ export default class AudioTrack extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    flex: 0,
+    backgroundColor: '#616161',
     justifyContent: 'center',
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
-    height: 10,
+    height: 100,
+    width: DEVICE_WIDTH*0.75,
+    padding: 10,
+    margin: 10
   },
 });

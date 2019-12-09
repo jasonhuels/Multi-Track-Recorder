@@ -33,6 +33,7 @@ export default class App extends React.Component {
         <AudioTrack canRecord={this.state.canRecord} />
         <AudioTrack canRecord={this.state.canRecord} />
         <AudioTrack canRecord={this.state.canRecord} />
+        
           
         <View style={{
           flexDirection: 'row'}}>
@@ -49,7 +50,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
   },
