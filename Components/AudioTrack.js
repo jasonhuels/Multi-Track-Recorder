@@ -37,9 +37,10 @@ export default class AudioTrack extends React.Component {
 
   async startRecording() {
     Alert.alert("started");
-    this.recording = new Audio.Recording();
+    const recording = new Audio.Recording();
     try {
-      await this.recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      this.recording = recording;
       await this.recording.startAsync();
       // You are now recording!
     } catch (error) {
@@ -49,7 +50,23 @@ export default class AudioTrack extends React.Component {
 
   async stopRecording() {
     Alert.alert("stopped");
-    await this.recording.stopAndUnloadAsync();
+    try {
+      await this.recording.stopAndUnloadAsync();
+      
+    } catch (error) {
+      console.log(error);
+    }
+
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      playsInSilentLockedModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
   }
 
   onPlayPressed = () => {
