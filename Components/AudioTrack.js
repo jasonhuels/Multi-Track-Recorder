@@ -12,12 +12,16 @@ export default class AudioTrack extends React.Component {
     this.state = {
       isRecording: false,
       isPlaying: false,
+      isLoading: false,
+      shouldPlay: false,
+      soundPosition: null,
+      soundDuration: null,
+      recordingDuration: null,
       isPlaybackAllowed: false,
       muted: false,
       shouldCorrectPitch: true,
       volume: 1.0,
       rate: 1.0,
-
     };
   }
 
@@ -36,7 +40,9 @@ export default class AudioTrack extends React.Component {
   };
 
   async startRecording() {
-    Alert.alert("started");
+    this.setState({
+      isLoading: true,
+    });
     const recording = new Audio.Recording();
     try {
       await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
@@ -46,11 +52,15 @@ export default class AudioTrack extends React.Component {
     } catch (error) {
       // An error occurred!
     }
+    this.setState({
+      isLoading: false,
+    });
   };
 
   async stopRecording() {
-    Alert.alert("stopped");
-
+    this.setState({
+      isLoading: true,
+    });
     try {
       await this.recording.stopAndUnloadAsync();
     } catch (error) {
@@ -68,21 +78,50 @@ export default class AudioTrack extends React.Component {
     });
     const { sound, status } = await this.recording.createNewLoadedSoundAsync(
       {
-        isLooping: true,
+        isLooping: false,
         isMuted: this.state.muted,
         volume: this.state.volume,
         rate: this.state.rate,
         shouldCorrectPitch: this.state.shouldCorrectPitch,
       },
-      this._updateScreenForSoundStatus
+      this.updateScreenForSoundStatus
     );
     this.sound = sound;
+    this.sound.playAsync();
+    this.setState({
+      isLoading: false,
+    });
   }
+
+  updateScreenForSoundStatus = status => {
+    if (status.isLoaded) {
+      this.setState({
+        soundDuration: status.durationMillis,
+        soundPosition: status.positionMillis,
+        shouldPlay: status.shouldPlay,
+        isPlaying: status.isPlaying,
+        rate: status.rate,
+        muted: status.isMuted,
+        volume: status.volume,
+        shouldCorrectPitch: status.shouldCorrectPitch,
+        isPlaybackAllowed: true,
+      });
+    } else {
+      this.setState({
+        soundDuration: null,
+        soundPosition: null,
+        isPlaybackAllowed: false,
+      });
+      if (status.error) {
+        console.log(`FATAL PLAYER ERROR: ${status.error}`);
+      }
+    }
+  };
 
   onPlayPressed = () => {
     if (this.sound != null) {
       if (this.state.isPlaying) {
-        if (this.sound != null) this.sound.pauseAsync();
+        this.sound.pauseAsync();
       } else {
         this.playbackAudioTrack();
       }
@@ -90,17 +129,7 @@ export default class AudioTrack extends React.Component {
   };
 
   async playbackAudioTrack() {
-    Alert.alert(this.recording);
-    const { sound, status } = await this.recording.createNewLoadedSoundAsync(
-      {
-        isLooping: false,
-        isMuted: this.state.muted,
-        volume: this.state.volume,
-        rate: this.state.rate,
-        shouldCorrectPitch: this.state.shouldCorrectPitch,
-      },
-    );
-    this.sound = sound;
+    Alert.alert(this.sound);
     this.sound.playAsync();
   }
 
@@ -115,7 +144,7 @@ export default class AudioTrack extends React.Component {
 
           <Slider />
 
-          <Button title="Play" onPress={this.playbackAudioTrack}/>
+          <Button title="Play" onPress={this.onPlayPressed}/>
         </View>
         <View style={{
           flexDirection: 'row'
