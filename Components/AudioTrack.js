@@ -50,13 +50,12 @@ export default class AudioTrack extends React.Component {
 
   async stopRecording() {
     Alert.alert("stopped");
+
     try {
       await this.recording.stopAndUnloadAsync();
-      
     } catch (error) {
       console.log(error);
     }
-
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -67,6 +66,17 @@ export default class AudioTrack extends React.Component {
       playThroughEarpieceAndroid: false,
       staysActiveInBackground: true,
     });
+    const { sound, status } = await this.recording.createNewLoadedSoundAsync(
+      {
+        isLooping: true,
+        isMuted: this.state.muted,
+        volume: this.state.volume,
+        rate: this.state.rate,
+        shouldCorrectPitch: this.state.shouldCorrectPitch,
+      },
+      this._updateScreenForSoundStatus
+    );
+    this.sound = sound;
   }
 
   onPlayPressed = () => {
@@ -80,16 +90,7 @@ export default class AudioTrack extends React.Component {
   };
 
   async playbackAudioTrack() {
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      playsInSilentLockedModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: false,
-      staysActiveInBackground: true,
-    });
+    Alert.alert(this.recording);
     const { sound, status } = await this.recording.createNewLoadedSoundAsync(
       {
         isLooping: false,
@@ -109,11 +110,12 @@ export default class AudioTrack extends React.Component {
         <View style={{
           flexDirection: 'row'
         }}>
-          <Button title="Rec" style={this.state.isRecording ? {backgroundColor: 'red'} : {backgroundColor: 'blue'}} onPress={this.onRecordPressed} />
+          <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
-          <Text>{this.state.isRecording ? 'true' : 'false'}</Text>
+
           <Slider />
-          <Button title="Play" />
+
+          <Button title="Play" onPress={this.playbackAudioTrack}/>
         </View>
         <View style={{
           flexDirection: 'row'
