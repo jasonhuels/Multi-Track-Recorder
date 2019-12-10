@@ -184,6 +184,22 @@ export default class AudioTrack extends React.Component {
       }
     }
   };
+
+  onSoloPressed = () => {
+
+  }
+
+  onMutePressed = () => {
+    if (this.sound != null) {
+      this.sound.setIsMutedAsync(!this.state.muted);
+    }
+  };
+
+  onVolumeSliderValueChange = value => {
+    if (this.sound != null) {
+      this.sound.setVolumeAsync(value);
+    }
+  };
   
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
@@ -205,10 +221,10 @@ export default class AudioTrack extends React.Component {
             <Button title="Solo" />
           </View>
           <View style={{ padding: 5 }}>
-            <Button title="Mute" />
+            <Button title="Mute" onPress={this.onMutePressed}/>
           </View>
           {/* Volume Slider */}
-          <Slider style={{width: DEVICE_WIDTH*0.25}}/>
+          <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
         </View>
@@ -225,7 +241,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 0.5,
     borderColor: '#d6d7da',
-    height: 100,
+    height: DEVICE_HEIGHT*0.15,
     width: DEVICE_WIDTH*0.85,
     padding: 10,
     margin: 10

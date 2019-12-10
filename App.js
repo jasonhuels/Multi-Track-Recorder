@@ -35,10 +35,10 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>      
+        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack id='4' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/> 
           
         <View style={{
           flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>
@@ -47,7 +47,7 @@ export default class App extends React.Component {
           </View>
           <Button title="Stop" />
           {/* Master Volume Slider */}
-          <Slider style={{ width: DEVICE_WIDTH * 0.4 }}/> 
+          <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/> 
           <Button title="Menu" />
         </View>
       </View>

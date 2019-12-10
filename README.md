@@ -30,7 +30,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ x ] Playback individual track recording
 - [ x ] Track record triggers other tracks to playback (unless muted)
 - [  ] Adjust track volume with slider
-- [  ] Mute Button
+- [ x ] Mute Button
 - [  ] Solo Button
 - [  ] Adjust playback slider to match track position
 
