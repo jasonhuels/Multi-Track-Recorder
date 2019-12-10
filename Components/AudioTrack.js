@@ -185,7 +185,7 @@ export default class AudioTrack extends React.Component {
         }}>
           <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
-          <Slider />
+          <Slider disabled='true'/>
           <Button title="Play" onPress={this.onPlayPressed}/>
         </View>
         <View style={{

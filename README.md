@@ -14,12 +14,45 @@ _An Android multi-track recorder application, designed to allow users to quickly
 * Project can be saved/loaded/deleted on local storage
 
 ## Stretch Goals
+* Record button count-in
+* Record button punch-in
 * Panning controls for each track
 * Solo/Mute buttons for each track
 * Each track can be exported in uncompressed format (wav/aac)
 * Audio tracks can be recorded from direct input (will require a preamp)
 * Metronome with adjustable BPM
 * Tuner 
+
+## TODO List
+## MVP
+# AudioTrack Component
+- [ x ] Record from mic
+- [ x ] Playback recording
+- [  ] Adjust track vomlume
+- [  ] Mute Button
+- [  ] Solo Button
+- [  ] Adjust playback slider to match track position
+
+# App Component
+- [ x ] Render AudioTracks
+- [  ] Play button triggers all tracks to play
+- [  ] Stop button triggers all tracks to stop
+
+# Menu Component
+- [ ] Create menu as a modal
+- [ ] Save project to local storage
+- [ ] Load saved project from storage
+
+## Stretch
+# AudioTrack Component
+- [ ] Count-in 
+- [ ] Allow record button to punch-in instead of overwritting from beginning of track
+
+# App Component
+- [ ] Metronome
+
+# Menu Component
+- [ ] Export as uncompressed file
 
 ## Setup/Installation Requirements_
 * _Clone this repository_
