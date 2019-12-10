@@ -5,14 +5,16 @@ import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
 import AudioTrack from './Components/AudioTrack';
 
-//const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
+const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       canRecord: false,
+      masterPlay: false,
     };
+    this.resetMasterPlay = this.resetMasterPlay.bind(this);
   }
 
   componentDidMount() {
@@ -25,23 +27,30 @@ export default class App extends React.Component {
       canRecord: response.status === 'granted',
     });
   };
+  
+  resetMasterPlay(){
+    this.setState({ masterPlay: false });
+    // Alert.alert("works")
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <AudioTrack canRecord={this.state.canRecord}/>
-        <AudioTrack canRecord={this.state.canRecord} />
-        <AudioTrack canRecord={this.state.canRecord} />
-        <AudioTrack canRecord={this.state.canRecord} />      
+        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
+        <AudioTrack canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>      
           
         <View style={{
-          flexDirection: 'row', paddingTop: 20, justifyContent: 'flex-end'}}>
-          <View style={{paddingRight: 5}}>
-            <Button title="Play" />
+          flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>
+          <View style={{paddingRight: 10}}>
+            <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
           </View>
           <Button title="Stop" />
           {/* Master Volume Slider */}
-          <Slider /> 
+          <Slider style={{ width: DEVICE_WIDTH * 0.4 }}/> 
+          {/* <Button title="Menu" /> */}
+          <Text>{this.state.masterPlay ? 'true' : 'false'}</Text>
         </View>
       </View>
     );

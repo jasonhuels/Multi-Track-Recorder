@@ -13,6 +13,7 @@ export default class AudioTrack extends React.Component {
     this.recording = null;
 
     this.state = {
+      masterPlay: this.props.masterPlay,
       isRecording: false,
       isPlaying: false,
       isLoading: false,
@@ -26,6 +27,17 @@ export default class AudioTrack extends React.Component {
       volume: 1.0,
       rate: 1.0,
     };
+  }
+  // Use this to update state when props change
+  componentDidUpdate() {
+    if(this.sound != null && this.props.masterPlay) {
+      this.sound.playAsync();
+      this.resetMasterPlay()
+    }
+  }
+
+  resetMasterPlay(){
+    this.props.resetMasterPlay();
   }
 
   onRecordPressed = () => {
@@ -163,21 +175,15 @@ export default class AudioTrack extends React.Component {
       if (this.state.isPlaying) {
         this.sound.pauseAsync();
       } else {
-        if(this.state.soundPosition >= this.state.soundDuration)
-        {
-          this.sound.setPositionAsync(0); // reset audio track to start position
-        }
         this.sound.playAsync();
       }
     }
   };
 
-  playbackAudioTrack() {
-    Alert.alert(this.sound);
-    
-  }
-
+  
   render(){
+    if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
+    { this.sound.stopAsync();}
     return(
       <View style={styles.container}>
         <View style={{
@@ -185,7 +191,7 @@ export default class AudioTrack extends React.Component {
         }}>
           <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
-          <Slider disabled='true'/>
+          <Slider disabled='true' style={{width: DEVICE_WIDTH*0.5}}/>
           <Button title="Play" onPress={this.onPlayPressed}/>
         </View>
         <View style={{
@@ -198,9 +204,11 @@ export default class AudioTrack extends React.Component {
             <Button title="Mute" />
           </View>
           {/* Volume Slider */}
-          <Slider />
+          <Slider style={{width: DEVICE_WIDTH*0.25}}/>
           {/* Panning Slider */}
-          <Slider />
+          {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
+
+          <Text>{this.state.isPlaying ? 'true' : 'false'}</Text>
         </View>
       </View>
     );
