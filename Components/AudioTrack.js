@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react-native';
 import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
 import { Audio } from 'expo-av';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
@@ -45,9 +46,28 @@ export default class AudioTrack extends React.Component {
     this.setState({
       isLoading: true,
     });
+    if (this.sound !== null) {
+      await this.sound.unloadAsync();
+      this.sound.setOnPlaybackStatusUpdate(null);
+      this.sound = null;
+    }
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
+    if (this.recording !== null) {
+      this.recording.setOnRecordingStatusUpdate(null);
+      this.recording = null;
+    }
     const recording = new Audio.Recording();
     try {
       await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      recording.setOnRecordingStatusUpdate(this.updateScreenForRecordingStatus);
       this.recording = recording;
       await this.recording.startAsync();
       // You are now recording!
@@ -68,6 +88,8 @@ export default class AudioTrack extends React.Component {
     } catch (error) {
       console.log(error);
     }
+    const info = await FileSystem.getInfoAsync(this.recording.getURI());
+    console.log(`FILE INFO: ${JSON.stringify(info)}`);
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -89,11 +111,27 @@ export default class AudioTrack extends React.Component {
       this.updateScreenForSoundStatus
     );
     this.sound = sound;
-    this.sound.playAsync();
     this.setState({
       isLoading: false,
     });
   }
+
+  updateScreenForRecordingStatus = status => {
+    if (status.canRecord) {
+      this.setState({
+        isRecording: status.isRecording,
+        recordingDuration: status.durationMillis,
+      });
+    } else if (status.isDoneRecording) {
+      this.setState({
+        isRecording: false,
+        recordingDuration: status.durationMillis,
+      });
+      if (!this.state.isLoading) {
+        this._stopRecordingAndEnablePlayback();
+      }
+    }
+  };
 
   updateScreenForSoundStatus = status => {
     if (status.isLoaded) {
@@ -125,14 +163,18 @@ export default class AudioTrack extends React.Component {
       if (this.state.isPlaying) {
         this.sound.pauseAsync();
       } else {
-        this.playbackAudioTrack();
+        if(this.state.soundPosition >= this.state.soundDuration)
+        {
+          this.sound.setPositionAsync(0); // reset audio track to start position
+        }
+        this.sound.playAsync();
       }
     }
   };
 
-  async playbackAudioTrack() {
+  playbackAudioTrack() {
     Alert.alert(this.sound);
-    this.sound.playAsync();
+    
   }
 
   render(){
@@ -143,16 +185,18 @@ export default class AudioTrack extends React.Component {
         }}>
           <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           {/* Playback Slider */}
-
           <Slider />
-
           <Button title="Play" onPress={this.onPlayPressed}/>
         </View>
         <View style={{
           flexDirection: 'row'
         }}>
-          <Button title="Solo" />
-          <Button title="Mute" />
+          <View style={{padding: 5}}>
+            <Button title="Solo" />
+          </View>
+          <View style={{ padding: 5 }}>
+            <Button title="Mute" />
+          </View>
           {/* Volume Slider */}
           <Slider />
           {/* Panning Slider */}
@@ -172,7 +216,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#d6d7da',
     height: 100,
-    width: DEVICE_WIDTH*0.75,
+    width: DEVICE_WIDTH*0.85,
     padding: 10,
     margin: 10
   },

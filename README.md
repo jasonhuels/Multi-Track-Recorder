@@ -11,7 +11,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 * Ability to record 4 audio tracks from device microphone
 * Each track can be played back individually or simultaneously
 * App should have master volume control and each track should have individual volume control
-* Project can be saved/loaded on local storage
+* Project can be saved/loaded/deleted on local storage
 
 ## Stretch Goals
 * Panning controls for each track

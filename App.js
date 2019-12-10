@@ -5,7 +5,7 @@ import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
 import AudioTrack from './Components/AudioTrack';
 
-const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
+//const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 
 export default class App extends React.Component {
   constructor(props) {
@@ -32,12 +32,13 @@ export default class App extends React.Component {
         <AudioTrack canRecord={this.state.canRecord}/>
         <AudioTrack canRecord={this.state.canRecord} />
         <AudioTrack canRecord={this.state.canRecord} />
-        <AudioTrack canRecord={this.state.canRecord} />
-        
+        <AudioTrack canRecord={this.state.canRecord} />      
           
         <View style={{
-          flexDirection: 'row'}}>
-          <Button title="Play" />
+          flexDirection: 'row', paddingTop: 20, justifyContent: 'flex-end'}}>
+          <View style={{paddingRight: 5}}>
+            <Button title="Play" />
+          </View>
           <Button title="Stop" />
           {/* Master Volume Slider */}
           <Slider /> 
