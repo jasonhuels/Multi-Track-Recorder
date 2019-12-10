@@ -1,7 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider } from 'react-native';
-import { Asset } from 'expo-asset';
-import { Audio } from 'expo-av';
 import * as Permissions from 'expo-permissions';
 import AudioTrack from './Components/AudioTrack';
 
@@ -13,8 +11,10 @@ export default class App extends React.Component {
     this.state = {
       canRecord: false,
       masterPlay: false,
+      shouldMute: [false, false, false, false]
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
+    this.resetShouldMute = this.resetShouldMute.bind(this);
   }
 
   componentDidMount() {
@@ -32,13 +32,21 @@ export default class App extends React.Component {
     this.setState({ masterPlay: trueOrFalse });
   }
 
+  resetShouldMute(id){
+    const temp = [];
+    for(let i=0; i<this.state.shouldMute.length; i++){
+      id.includes(i) ? temp[i] = false : temp[i] = true;
+    }
+    this.setState({shouldMute: temp});
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/>
-        <AudioTrack id='4' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay}/> 
+        <AudioTrack id='0' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[0]} resetShouldMute={this.resetShouldMute}/>
+        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[1]} resetShouldMute={this.resetShouldMute}/>
+        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[2]} resetShouldMute={this.resetShouldMute}/>
+        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[3]} resetShouldMute={this.resetShouldMute}/> 
           
         <View style={{
           flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>

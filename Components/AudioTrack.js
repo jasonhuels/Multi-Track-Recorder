@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react-native';
-import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
 import { Audio } from 'expo-av';
 
@@ -30,10 +29,13 @@ export default class AudioTrack extends React.Component {
   }
   // Use this to update state when props change
   componentDidUpdate() {
-    if(this.sound != null && this.props.masterPlay) {
+    if(this.sound != null && !this.state.muted && this.props.masterPlay) {
       this.sound.playAsync();
       this.stopMasterPlay()
     }
+    if(!this.state.muted && this.props.shouldMute){
+      this.setState({muted: true});
+    } 
   }
 
   stopMasterPlay(){
@@ -186,12 +188,17 @@ export default class AudioTrack extends React.Component {
   };
 
   onSoloPressed = () => {
+    this.resetShouldMute();
+  }
 
+  resetShouldMute(){
+    this.props.resetShouldMute(this.props.id);
   }
 
   onMutePressed = () => {
     if (this.sound != null) {
       this.sound.setIsMutedAsync(!this.state.muted);
+      this.resetShouldMute(this.props.id);
     }
   };
 
@@ -218,15 +225,17 @@ export default class AudioTrack extends React.Component {
           flexDirection: 'row'
         }}>
           <View style={{padding: 5}}>
-            <Button title="Solo" />
+            <Button title="Solo" onPress={this.onSoloPressed}/>
           </View>
           <View style={{ padding: 5 }}>
-            <Button title="Mute" onPress={this.onMutePressed}/>
+            <Button title="Mute" color={this.state.muted ? 'red' : 'blue'} onPress={this.onMutePressed}/>
           </View>
           {/* Volume Slider */}
           <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
+
+          <Text>{this.props.shouldMute ? 'true' : 'false'}</Text>
         </View>
       </View>
     );
