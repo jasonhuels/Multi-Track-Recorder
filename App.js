@@ -28,9 +28,8 @@ export default class App extends React.Component {
     });
   };
   
-  resetMasterPlay(){
-    this.setState({ masterPlay: false });
-    // Alert.alert("works")
+  resetMasterPlay(trueOrFalse){
+    this.setState({ masterPlay: trueOrFalse });
   }
 
   render() {
@@ -49,8 +48,7 @@ export default class App extends React.Component {
           <Button title="Stop" />
           {/* Master Volume Slider */}
           <Slider style={{ width: DEVICE_WIDTH * 0.4 }}/> 
-          {/* <Button title="Menu" /> */}
-          <Text>{this.state.masterPlay ? 'true' : 'false'}</Text>
+          <Button title="Menu" />
         </View>
       </View>
     );

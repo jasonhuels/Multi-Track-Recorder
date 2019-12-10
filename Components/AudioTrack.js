@@ -32,12 +32,16 @@ export default class AudioTrack extends React.Component {
   componentDidUpdate() {
     if(this.sound != null && this.props.masterPlay) {
       this.sound.playAsync();
-      this.resetMasterPlay()
+      this.stopMasterPlay()
     }
   }
 
-  resetMasterPlay(){
-    this.props.resetMasterPlay();
+  stopMasterPlay(){
+    this.props.resetMasterPlay(false);
+  }
+
+  startMasterPlay() {
+    this.props.resetMasterPlay(true);
   }
 
   onRecordPressed = () => {
@@ -58,6 +62,7 @@ export default class AudioTrack extends React.Component {
     this.setState({
       isLoading: true,
     });
+    this.startMasterPlay();
     if (this.sound !== null) {
       await this.sound.unloadAsync();
       this.sound.setOnPlaybackStatusUpdate(null);
@@ -179,7 +184,6 @@ export default class AudioTrack extends React.Component {
       }
     }
   };
-
   
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
@@ -207,8 +211,6 @@ export default class AudioTrack extends React.Component {
           <Slider style={{width: DEVICE_WIDTH*0.25}}/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
-
-          <Text>{this.state.isPlaying ? 'true' : 'false'}</Text>
         </View>
       </View>
     );

@@ -10,7 +10,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 ## MVP
 * Ability to record 4 audio tracks from device microphone
 * Each track can be played back individually or simultaneously
-* App should have master volume control and each track should have individual volume control
+* Each track should have individual volume control
 * Project can be saved/loaded/deleted on local storage
 
 ## Stretch Goals
@@ -28,6 +28,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 # AudioTrack Component
 - [ x ] Record from mic
 - [ x ] Playback individual track recording
+- [ x ] Track record triggers other tracks to playback (unless muted)
 - [  ] Adjust track volume with slider
 - [  ] Mute Button
 - [  ] Solo Button
@@ -37,7 +38,6 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ x ] Render AudioTracks
 - [ x ] Play button triggers all tracks to play
 - [  ] Stop button triggers all tracks to stop
-- [  ] Adjust master volume with master volume slider
 
 # Menu Component
 - [ ] Create menu as a modal
@@ -46,11 +46,14 @@ _An Android multi-track recorder application, designed to allow users to quickly
 
 ## Stretch
 # AudioTrack Component
-- [ ] Count-in 
+- [ ] Count-in on record press
 - [ ] Allow record button to punch-in instead of overwritting from beginning of track
+- [ ] Panning controls
+- [ ] Direct input recording
 
 # App Component
-- [ ] Metronome
+- [ ] Metronome with adjustable BPM
+- [ ] Tuner
 
 # Menu Component
 - [ ] Export as uncompressed file
