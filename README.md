@@ -38,7 +38,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 ### App Component
 - [x] Render AudioTracks
 - [x] Play button triggers all tracks to play
-- [ ] Stop button triggers all tracks to stop
+- [x] Stop button triggers all tracks to stop
 
 ### Menu Component
 - [ ] Create menu as a modal

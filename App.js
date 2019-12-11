@@ -18,6 +18,7 @@ export default class App extends React.Component {
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);
     this.setShouldMuteToFalse = this.setShouldMuteToFalse.bind(this);
+    this.resetStopAll = this.resetStopAll.bind(this);
   }
 
   componentDidMount() {
@@ -33,6 +34,9 @@ export default class App extends React.Component {
   
   resetMasterPlay(trueOrFalse){
     this.setState({ masterPlay: trueOrFalse });
+  }
+  resetStopAll() {
+    this.setState({ stopAll: false });
   }
 
   resetShouldMute(id){
@@ -60,7 +64,10 @@ export default class App extends React.Component {
         resetMasterPlay={this.resetMasterPlay}
         shouldMute={this.state.shouldMute[i]}
         resetShouldMute={this.resetShouldMute}
-        setShouldMuteToFalse={this.setShouldMuteToFalse} />
+        setShouldMuteToFalse={this.setShouldMuteToFalse}
+        stopAll={this.state.stopAll} 
+        resetStopAll={this.resetStopAll}
+        />
     }
     return (
       <View style={styles.container}>
@@ -81,7 +88,7 @@ export default class App extends React.Component {
           <View style={{paddingRight: 10}}>
             <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
           </View>
-          <Button title="Stop" />
+          <Button title="Stop" onPress={() => this.setState({ stopAll: true })} />
           {/* Master Volume Slider */}
           <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/> 
           <Button title="Menu" />
