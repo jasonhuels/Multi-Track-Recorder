@@ -35,6 +35,9 @@ export default class AudioTrack extends React.Component {
     }
     if(!this.state.muted && this.props.shouldMute){
       this.setState({muted: true});
+      if(this.state.isPlaying){
+        this.sound.stopAsync();
+      }
     } 
   }
 
@@ -108,7 +111,6 @@ export default class AudioTrack extends React.Component {
       console.log(error);
     }
     const info = await FileSystem.getInfoAsync(this.recording.getURI());
-    console.log(`FILE INFO: ${JSON.stringify(info)}`);
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,

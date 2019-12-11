@@ -31,7 +31,8 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [x] Track record triggers other tracks to playback (unless muted)
 - [x] Adjust track volume with slider
 - [x] Mute Button
-- [  ] Solo Button
+- [x] Solo Button
+- [  ] Refactor Mute/Solo to not stop playback and continue along with other tracks for dynamic muting
 - [  ] Adjust playback slider to match track position
 
 # App Component
