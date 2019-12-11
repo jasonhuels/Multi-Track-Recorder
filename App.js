@@ -15,6 +15,7 @@ export default class App extends React.Component {
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);
+    this.setShouldMuteToFalse = this.setShouldMuteToFalse.bind(this);
   }
 
   componentDidMount() {
@@ -40,13 +41,21 @@ export default class App extends React.Component {
     this.setState({shouldMute: temp});
   }
 
+  setShouldMuteToFalse(id){
+    const temp = [];
+    for (let i = 0; i < this.state.shouldMute.length; i++) {
+      id.includes(i) ? temp[i] = false : temp[i] = this.state.shouldMute[i];
+    }
+    this.setState({ shouldMute: temp });
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <AudioTrack id='0' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[0]} resetShouldMute={this.resetShouldMute}/>
-        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[1]} resetShouldMute={this.resetShouldMute}/>
-        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[2]} resetShouldMute={this.resetShouldMute}/>
-        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[3]} resetShouldMute={this.resetShouldMute}/> 
+        <AudioTrack id='0' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[0]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
+        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[1]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
+        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[2]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
+        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[3]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/> 
           
         <View style={{
           flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>

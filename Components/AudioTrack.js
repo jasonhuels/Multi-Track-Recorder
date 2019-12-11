@@ -188,17 +188,24 @@ export default class AudioTrack extends React.Component {
   };
 
   onSoloPressed = () => {
-    //this.resetShouldMute();
+    this.resetShouldMute();
   }
 
   resetShouldMute(){
     this.props.resetShouldMute(this.props.id);
   }
 
+  setShouldMuteToFalse() {
+    this.props.setShouldMuteToFalse(this.props.id);
+  }
+
   onMutePressed = () => {
     if (this.sound != null) {
       this.sound.setIsMutedAsync(!this.state.muted);
-      this.resetShouldMute(this.props.id);
+      if(this.props.shouldMute) {
+        this.setShouldMuteToFalse(this.props.id);
+
+      }
     }
   };
 

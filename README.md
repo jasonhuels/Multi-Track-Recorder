@@ -26,17 +26,17 @@ _An Android multi-track recorder application, designed to allow users to quickly
 ## TODO List
 ## MVP
 # AudioTrack Component
-- [ x ] Record from mic
-- [ x ] Playback individual track recording
-- [ x ] Track record triggers other tracks to playback (unless muted)
-- [ x ] Adjust track volume with slider
-- [ x ] Mute Button
+- [x] Record from mic
+- [x] Playback individual track recording
+- [x] Track record triggers other tracks to playback (unless muted)
+- [x] Adjust track volume with slider
+- [x] Mute Button
 - [  ] Solo Button
 - [  ] Adjust playback slider to match track position
 
 # App Component
-- [ x ] Render AudioTracks
-- [ x ] Play button triggers all tracks to play
+- [x] Render AudioTracks
+- [x] Play button triggers all tracks to play
 - [  ] Stop button triggers all tracks to stop
 
 # Menu Component
