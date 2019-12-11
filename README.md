@@ -52,11 +52,11 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ ] Direct input recording
 
 # App Component
-- [ ] Metronome with adjustable BPM
-- [ ] Tuner
 
 # Menu Component
 - [ ] Export as uncompressed file
+- [ ] Metronome with adjustable BPM
+- [ ] Tuner
 
 ## Setup/Installation Requirements_
 * _Clone this repository_

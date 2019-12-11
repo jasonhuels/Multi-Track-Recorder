@@ -188,7 +188,7 @@ export default class AudioTrack extends React.Component {
   };
 
   onSoloPressed = () => {
-    this.resetShouldMute();
+    //this.resetShouldMute();
   }
 
   resetShouldMute(){
