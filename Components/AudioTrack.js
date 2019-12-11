@@ -33,7 +33,7 @@ export default class AudioTrack extends React.Component {
       this.sound.playAsync();
       this.stopMasterPlay()
     }
-    if(!this.state.muted && this.props.shouldMute){
+    if (this.sound != null && !this.state.muted && this.props.shouldMute){
       //this.setState({muted: true});
       this.sound.setIsMutedAsync(!this.state.muted);
     } 
