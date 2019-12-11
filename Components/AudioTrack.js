@@ -29,15 +29,13 @@ export default class AudioTrack extends React.Component {
   }
   // Use this to update state when props change
   componentDidUpdate() {
-    if(this.sound != null && !this.state.muted && this.props.masterPlay) {
+    if(this.sound != null && this.props.masterPlay) {
       this.sound.playAsync();
       this.stopMasterPlay()
     }
     if(!this.state.muted && this.props.shouldMute){
-      this.setState({muted: true});
-      if(this.state.isPlaying){
-        this.sound.stopAsync();
-      }
+      //this.setState({muted: true});
+      this.sound.setIsMutedAsync(!this.state.muted);
     } 
   }
 
@@ -94,7 +92,7 @@ export default class AudioTrack extends React.Component {
       await this.recording.startAsync();
       // You are now recording!
     } catch (error) {
-      // An error occurred!
+      console.log(error);
     }
     this.setState({
       isLoading: false,
