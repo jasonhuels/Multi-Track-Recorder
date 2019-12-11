@@ -23,41 +23,41 @@ _An Android multi-track recorder application, designed to allow users to quickly
 * Metronome with adjustable BPM
 * Tuner 
 
-## TODO List
+# TODO List
 ## MVP
-# AudioTrack Component
+### AudioTrack Component
 - [x] Record from mic
 - [x] Playback individual track recording
 - [x] Track record triggers other tracks to playback (unless muted)
 - [x] Adjust track volume with slider
 - [x] Mute Button
 - [x] Solo Button
-- [  ] Refactor Mute/Solo to not stop playback and continue along with other tracks for dynamic muting
-- [  ] Adjust playback slider to match track position
+- [] Refactor Mute/Solo to not stop playback and continue along with other tracks for dynamic muting
+- [] Adjust playback slider to match track position
 
-# App Component
+### App Component
 - [x] Render AudioTracks
 - [x] Play button triggers all tracks to play
-- [  ] Stop button triggers all tracks to stop
+- [] Stop button triggers all tracks to stop
 
-# Menu Component
-- [ ] Create menu as a modal
-- [ ] Save project to local storage
-- [ ] Load saved project from storage
+### Menu Component
+- [] Create menu as a modal
+- [] Save project to local storage
+- [] Load saved project from storage
 
 ## Stretch
-# AudioTrack Component
-- [ ] Count-in on record press
-- [ ] Allow record button to punch-in instead of overwritting from beginning of track
-- [ ] Panning controls
-- [ ] Direct input recording
+### AudioTrack Component
+- [] Count-in on record press
+- [] Allow record button to punch-in instead of overwritting from beginning of track
+- [] Panning controls
+- [] Direct input recording
 
-# App Component
+### App Component
 
-# Menu Component
-- [ ] Export as uncompressed file
-- [ ] Metronome with adjustable BPM
-- [ ] Tuner
+### Menu Component
+- [] Export as uncompressed file
+- [] Metronome with adjustable BPM
+- [] Tuner
 
 ## Setup/Installation Requirements_
 * _Clone this repository_
