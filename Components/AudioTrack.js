@@ -26,6 +26,8 @@ export default class AudioTrack extends React.Component {
       volume: 1.0,
       rate: 1.0,
     };
+    this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY));
+    this.recordingSettings.android['extension'] = '.wav';
   }
   // Use this to update state when props change
   componentDidUpdate() {
@@ -92,7 +94,7 @@ export default class AudioTrack extends React.Component {
     }
     const recording = new Audio.Recording();
     try {
-      await recording.prepareToRecordAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+      await recording.prepareToRecordAsync(this.recordingSettings);
       recording.setOnRecordingStatusUpdate(this.updateScreenForRecordingStatus);
       this.recording = recording;
       await this.recording.startAsync();
@@ -115,6 +117,7 @@ export default class AudioTrack extends React.Component {
       console.log(error);
     }
     const info = await FileSystem.getInfoAsync(this.recording.getURI());
+    console.log(`FILE INFO: ${JSON.stringify(info)}`);
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
