@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import AudioTrack from './Components/AudioTrack';
+import MenuModal from './Components/MenuModal';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 
@@ -13,12 +14,14 @@ export default class App extends React.Component {
       canRecord: false,
       masterPlay: false,
       shouldMute: [false, false, false, false],
-      stopAll: false
+      stopAll: false,
+      menuOpen: false
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);
     this.setShouldMuteToFalse = this.setShouldMuteToFalse.bind(this);
     this.resetStopAll = this.resetStopAll.bind(this);
+    this.resetMenuOpen = this.resetMenuOpen.bind(this);
   }
 
   componentDidMount() {
@@ -55,6 +58,10 @@ export default class App extends React.Component {
     this.setState({ shouldMute: temp });
   }
 
+  resetMenuOpen(trueOrFalse){
+    this.setState({ menuOpen: trueOrFalse})
+  }
+
   render() {
     const tracks = [];
     for(let i=0; i<this.state.numTracks; i++) {
@@ -82,6 +89,7 @@ export default class App extends React.Component {
         <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[1]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
         <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[2]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
         <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[3]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>   */}
+        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/>
           
         <View style={{
           flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>
@@ -91,7 +99,7 @@ export default class App extends React.Component {
           <Button title="Stop" onPress={() => this.setState({ stopAll: true })} />
           {/* Master Volume Slider */}
           <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/> 
-          <Button title="Menu" />
+          <Button title="Menu" onPress={() => this.setState({menuOpen: !this.state.menuOpen})} />
         </View>
       </View>
     );

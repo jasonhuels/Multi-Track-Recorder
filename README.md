@@ -28,11 +28,11 @@ _An Android multi-track recorder application, designed to allow users to quickly
 ### AudioTrack Component
 - [x] Record from mic
 - [x] Playback individual track recording
-- [x] Track record triggers other tracks to playback (unless muted)
+- [x] Track record triggers other tracks to play (unless muted)
 - [x] Adjust track volume with slider
 - [x] Mute Button
 - [x] Solo Button
-- [x] Dynamically toggle solo/mute
+- [x] Dynamically toggle solo/mute during playback
 - [ ] Adjust playback slider to match track position
 
 ### App Component
@@ -44,11 +44,13 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ ] Create menu as a modal
 - [ ] Save project to local storage
 - [ ] Load saved project from storage
+- [ ] Delete saved project from storage
 
 ## Stretch
 ### AudioTrack Component
 - [ ] Count-in on record press
 - [ ] Allow record button to punch-in instead of overwritting from beginning of track
+- [ ] Delete unwanted tracks rather than recording over them or muting them
 - [ ] Panning controls
 - [ ] Direct input recording
 

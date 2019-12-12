@@ -116,8 +116,8 @@ export default class AudioTrack extends React.Component {
     } catch (error) {
       console.log(error);
     }
-    const info = await FileSystem.getInfoAsync(this.recording.getURI());
-    console.log(`FILE INFO: ${JSON.stringify(info)}`);
+    // const info = await FileSystem.getInfoAsync(this.recording.getURI());
+    // console.log(`FILE INFO: ${JSON.stringify(info)}`);
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
