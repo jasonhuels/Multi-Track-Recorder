@@ -1,8 +1,7 @@
 import React from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, Button } from 'react-native';
-import FileSystem from 'react-native-filesystem';
-
-
+//import FileSystem from 'react-native-filesystem';
+import * as FileSystem from 'expo-file-system';
 
 export default class MenuModal extends React.Component {
   state = {
@@ -28,12 +27,12 @@ export default class MenuModal extends React.Component {
   async onPressSaveButton() {
     const fileContents = 'This is a my content.';
     try {
-      await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
-
+      //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
+      FileSystem.writeAsStringAsync(FileSystem.documentDirectory, fileContents);
+      console.log('file is written');
     } catch(err) {
       console.log(err)
     }
-    console.log('file is written');
   }
 
 
