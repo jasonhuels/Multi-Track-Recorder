@@ -89,16 +89,6 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View>{tracks}</View>
-         {/* <AudioTrack id='0' 
-                    canRecord={this.state.canRecord} 
-                    masterPlay={this.state.masterPlay} 
-                    resetMasterPlay={this.resetMasterPlay} 
-                    shouldMute={this.state.shouldMute[0]} 
-                    resetShouldMute={this.resetShouldMute} 
-                    setShouldMuteToFalse={this.setShouldMuteToFalse}/>
-        <AudioTrack id='1' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[1]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
-        <AudioTrack id='2' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[2]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>
-        <AudioTrack id='3' canRecord={this.state.canRecord} masterPlay={this.state.masterPlay} resetMasterPlay={this.resetMasterPlay} shouldMute={this.state.shouldMute[3]} resetShouldMute={this.resetShouldMute} setShouldMuteToFalse={this.setShouldMuteToFalse}/>   */}
         <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/>
           
         <View style={{
