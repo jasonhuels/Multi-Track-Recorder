@@ -62,7 +62,11 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ ] Tuner
 
 ## Components
+#### App
 ![App Component](AppComponent.png)
+
+#### AudioTrack
+![AudioTrack Component](AudioTrack.png)
 
 ## Setup/Installation Requirements_
 * _Clone this repository_
