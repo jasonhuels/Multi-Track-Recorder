@@ -61,6 +61,9 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [ ] Metronome with adjustable BPM
 - [ ] Tuner
 
+## Components
+![App Component](AppComponent.png)
+
 ## Setup/Installation Requirements_
 * _Clone this repository_
 * _Navigate to the directory_
