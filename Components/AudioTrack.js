@@ -231,6 +231,7 @@ export default class AudioTrack extends React.Component {
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
     { this.sound.stopAsync();}
+    let pos = this.state.soundPosition;
     return(
       <View style={styles.container}>
         <View style={{
@@ -255,7 +256,7 @@ export default class AudioTrack extends React.Component {
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
 
-          <Text>{this.props.shouldMute ? 'true' : 'false'}</Text>
+          <Text>{pos}</Text>
         </View>
       </View>
     );
