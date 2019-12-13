@@ -23,18 +23,26 @@ export default class MenuModal extends React.Component {
     return (
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={this.state.modalVisible}>
           <View style={styles.container}>
-            <View>
-              <Button title={'Save Project'} />
-              <Button title={'Load Project'}  />
-              <Button title={'Delete Project'}  />
-              <Button title={"Cancel"}
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                  this.resetMenuOpen();
-                }} />
+            <View style={{width: 250}}>
+              <View style={styles.button}>
+                <Button title={'Save Project'} />
+              </View>
+              <View style={styles.button}>
+                <Button title={'Load Project'}  />
+              </View>
+              <View style={styles.button}>
+                <Button title={'Delete Project'}  />
+              </View>
+              <View style={styles.button}>
+                <Button title={"Cancel"}
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                    this.resetMenuOpen();
+                  }} />
+              </View>
             </View>
           </View>
         </Modal>
@@ -45,10 +53,13 @@ export default class MenuModal extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0,
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'rgba(52, 52, 52, 0.5)',
-
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(52, 52, 52, 0.9)',
+    padding: 100
   },
+  button: {
+    margin: 10
+  }
 });
