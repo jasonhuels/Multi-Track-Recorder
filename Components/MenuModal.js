@@ -1,24 +1,39 @@
 import React from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, Button } from 'react-native';
+import FileSystem from 'react-native-filesystem';
+
+
 
 export default class MenuModal extends React.Component {
   state = {
     modalVisible: false,
   };
 
-  onPressSaveButton = () => {
-    var RNFS = require("react-native-fs");
-    // create a path you want to write to
-    var path = RNFS.DocumentDirectoryPath + '/test.txt';
+  // onPressSaveButton(){
+  //   console.log("got here")
+  //   var RNFS = require("react-native-fs");
+  //   // create a path you want to write to
+  //   var path = RNFS.DocumentDirectoryPath + '/test.txt';
     
-    // write the file
-    RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')
-      .then((success) => {
-        console.log('FILE WRITTEN!');
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+  //   // write the file
+  //   RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')
+  //     .then((success) => {
+  //       console.log('FILE WRITTEN!');
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }
+
+  async onPressSaveButton() {
+    const fileContents = 'This is a my content.';
+    try {
+      await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
+
+    } catch(err) {
+      console.log(err)
+    }
+    console.log('file is written');
   }
 
 
@@ -44,7 +59,7 @@ export default class MenuModal extends React.Component {
           <View style={styles.container}>
             <View style={{width: 250}}>
               <View style={styles.button}>
-              <Button title={'Save Project'} onPress={() => this.onPressSaveButton}/>
+              <Button title={'Save Project'} onPress={this.onPressSaveButton}/>
               </View>
               <View style={styles.button}>
                 <Button title={'Load Project'}  />
