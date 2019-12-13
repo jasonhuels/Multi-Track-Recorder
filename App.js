@@ -12,6 +12,7 @@ export default class App extends React.Component {
     this.state = {
       numTracks: 4,
       canRecord: false,
+      accessFiles: false,
       masterPlay: false,
       shouldMute: [false, false, false, false],
       stopAll: false,
@@ -26,6 +27,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     this.requestRecordingPermission();
+    this.requestCameraPermission();
   }
 
   requestRecordingPermission = async () => {
@@ -35,6 +37,14 @@ export default class App extends React.Component {
     });
   };
   
+  requestCameraPermission = async () => {
+    const response = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+    this.setState({
+      accessFiles: response.status === 'granted',
+    });
+  };
+
+
   resetMasterPlay(trueOrFalse){
     this.setState({ masterPlay: trueOrFalse });
   }

@@ -2,38 +2,23 @@ import React from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, Button } from 'react-native';
 //import FileSystem from 'react-native-filesystem';
 import * as FileSystem from 'expo-file-system';
+import * as MediaLibrary from 'expo-media-library';
 
 export default class MenuModal extends React.Component {
   state = {
     modalVisible: false,
   };
 
-  // onPressSaveButton(){
-  //   console.log("got here")
-  //   var RNFS = require("react-native-fs");
-  //   // create a path you want to write to
-  //   var path = RNFS.DocumentDirectoryPath + '/test.txt';
-    
-  //   // write the file
-  //   RNFS.writeFile(path, 'Lorem ipsum dolor sit amet', 'utf8')
-  //     .then((success) => {
-  //       console.log('FILE WRITTEN!');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
+  // async onPressSaveButton() {
+  //   const fileContents = 'This is a my content.';
+  //   try {
+  //     //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
+  //     FileSystem.writeAsStringAsync(MediaLibrary.audio, fileContents);
+  //     console.log(MediaLibrary.audio);
+  //   } catch(err) {
+  //     console.log(err)
+  //   }
   // }
-
-  async onPressSaveButton() {
-    const fileContents = 'This is a my content.';
-    try {
-      //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
-      FileSystem.writeAsStringAsync(FileSystem.documentDirectory, fileContents);
-      console.log('file is written');
-    } catch(err) {
-      console.log(err)
-    }
-  }
 
 
   setModalVisible(visible) {

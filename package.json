@@ -10,13 +10,14 @@
   "dependencies": {
     "expo": "^35.0.0",
     "expo-av": "~7.0.1",
+    "expo-file-system": "~7.0.0",
+    "expo-media-library": "~7.0.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-filesystem": "^0.1.0",
     "react-native-fs": "^2.16.2",
-    "react-native-web": "^0.11.7",
-    "expo-file-system": "~7.0.0"
+    "react-native-web": "^0.11.7"
   },
   "devDependencies": {
     "babel-preset-expo": "^7.1.0"
