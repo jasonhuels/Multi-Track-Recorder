@@ -27,11 +27,11 @@ export default class AudioTrack extends React.Component {
       rate: 1.0,
     };
     this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY));
-    this.recordingSettings.android['extension'] = '.wav';
+    //this.recordingSettings.android['extension'] = '.wav';
   }
   // Use this to update state when props change
   componentDidUpdate() {
-    if(this.sound != null){
+    if(this.sound != null && !this.state.isLoading){
       if(this.props.masterPlay) {
         this.sound.playAsync();
         this.stopMasterPlay()
@@ -75,19 +75,27 @@ export default class AudioTrack extends React.Component {
     });
     this.startMasterPlay();
     if (this.sound !== null) {
-      await this.sound.unloadAsync();
+      try{
+        await this.sound.unloadAsync();
+      } catch(err){
+        console.log(err);
+      }
       this.sound.setOnPlaybackStatusUpdate(null);
       this.sound = null;
     }
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: true,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: false,
-      staysActiveInBackground: true,
-    });
+    try{
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        playThroughEarpieceAndroid: false,
+        staysActiveInBackground: true,
+      });
+    } catch(err) {
+      console.log(err);
+    }
     if (this.recording !== null) {
       this.recording.setOnRecordingStatusUpdate(null);
       this.recording = null;
@@ -118,16 +126,21 @@ export default class AudioTrack extends React.Component {
     }
     // const info = await FileSystem.getInfoAsync(this.recording.getURI());
     // console.log(`FILE INFO: ${JSON.stringify(info)}`);
-    await Audio.setAudioModeAsync({
-      allowsRecordingIOS: false,
-      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-      playsInSilentModeIOS: true,
-      playsInSilentLockedModeIOS: true,
-      shouldDuckAndroid: true,
-      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-      playThroughEarpieceAndroid: false,
-      staysActiveInBackground: true,
-    });
+    try{
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        playsInSilentLockedModeIOS: true,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        playThroughEarpieceAndroid: false,
+        staysActiveInBackground: true,
+      });
+    } catch(err) {
+      console.log(err);
+    }
+    
     const { sound, status } = await this.recording.createNewLoadedSoundAsync(
       {
         isLooping: false,
@@ -175,11 +188,15 @@ export default class AudioTrack extends React.Component {
         isPlaybackAllowed: true,
       });
     } else {
-      this.setState({
-        soundDuration: null,
-        soundPosition: null,
-        isPlaybackAllowed: false,
-      });
+      // try{
+      //   this.setState({
+      //     soundDuration: null,
+      //     soundPosition: null,
+      //     isPlaybackAllowed: false,
+      //   });
+      // } catch(err) {
+      //   console.log(err);
+      // }
       if (status.error) {
         console.log(`FATAL PLAYER ERROR: ${status.error}`);
       }

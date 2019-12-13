@@ -76,7 +76,9 @@ _An Android multi-track recorder application, designed to allow users to quickly
 * _Use the expo app on your Android device to scan the QR code and launch the application_
 
 ## Known Bugs
-_Does not function on iPhone_
+* Does not function on iPhone
+* Latency in playback of tracks
+* Saving seems to work but can't be found on device
 
 ## Support and contact details
 _jasonhuels@yahoo.com_
