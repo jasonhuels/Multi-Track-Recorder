@@ -2,23 +2,22 @@ import React from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, Button } from 'react-native';
 //import FileSystem from 'react-native-filesystem';
 import * as FileSystem from 'expo-file-system';
-import * as MediaLibrary from 'expo-media-library';
 
 export default class MenuModal extends React.Component {
   state = {
     modalVisible: false,
   };
 
-  // async onPressSaveButton() {
-  //   const fileContents = 'This is a my content.';
-  //   try {
-  //     //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
-  //     FileSystem.writeAsStringAsync(MediaLibrary.audio, fileContents);
-  //     console.log(MediaLibrary.audio);
-  //   } catch(err) {
-  //     console.log(err)
-  //   }
-  // }
+  async onPressSaveButton() {
+    const fileContents = 'This is a my content.';
+    try {
+      //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
+      FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/my-file.txt', fileContents);
+      console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + '/my-file.txt'));
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
 
   setModalVisible(visible) {
