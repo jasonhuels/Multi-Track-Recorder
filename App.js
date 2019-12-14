@@ -44,7 +44,6 @@ export default class App extends React.Component {
     });
   };
 
-
   resetMasterPlay(trueOrFalse){
     this.setState({ masterPlay: trueOrFalse });
   }
@@ -89,8 +88,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View>{tracks}</View>
-        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/>
-          
+        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/> 
         <View style={{
           flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>
           <View style={{paddingRight: 10}}>

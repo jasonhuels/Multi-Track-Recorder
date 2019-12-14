@@ -58,7 +58,6 @@ export default class MenuModal extends React.Component {
             </View>
           </View>
         </Modal>
-
     );
   }
 }

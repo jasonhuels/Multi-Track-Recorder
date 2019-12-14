@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react-native';
-import * as FileSystem from 'expo-file-system';
 import { Audio } from 'expo-av';
 
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
@@ -25,9 +24,10 @@ export default class AudioTrack extends React.Component {
       shouldCorrectPitch: true,
       volume: 1.0,
       rate: 1.0,
+      uri: null
     };
     this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY));
-    //this.recordingSettings.android['extension'] = '.wav';
+    this.recordingSettings.android['extension'] = '.wav';
   }
   // Use this to update state when props change
   componentDidUpdate() {
@@ -37,7 +37,6 @@ export default class AudioTrack extends React.Component {
         this.stopMasterPlay()
       }
       if (!this.state.muted && this.props.shouldMute){
-        //this.setState({muted: true});
         this.sound.setIsMutedAsync(!this.state.muted);
       } 
       if(this.props.stopAll) {
@@ -75,27 +74,20 @@ export default class AudioTrack extends React.Component {
     });
     this.startMasterPlay();
     if (this.sound !== null) {
-      try{
-        await this.sound.unloadAsync();
-      } catch(err){
-        console.log(err);
-      }
+      await this.sound.unloadAsync();
       this.sound.setOnPlaybackStatusUpdate(null);
       this.sound = null;
     }
-    try{
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: true,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        playsInSilentModeIOS: true,
-        shouldDuckAndroid: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        playThroughEarpieceAndroid: false,
-        staysActiveInBackground: true,
-      });
-    } catch(err) {
-      console.log(err);
-    }
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: true,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
+  
     if (this.recording !== null) {
       this.recording.setOnRecordingStatusUpdate(null);
       this.recording = null;
@@ -126,20 +118,16 @@ export default class AudioTrack extends React.Component {
     }
     // const info = await FileSystem.getInfoAsync(this.recording.getURI());
     // console.log(`FILE INFO: ${JSON.stringify(info)}`);
-    try{
-      await Audio.setAudioModeAsync({
-        allowsRecordingIOS: false,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
-        playsInSilentModeIOS: true,
-        playsInSilentLockedModeIOS: true,
-        shouldDuckAndroid: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        playThroughEarpieceAndroid: false,
-        staysActiveInBackground: true,
-      });
-    } catch(err) {
-      console.log(err);
-    }
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      playsInSilentLockedModeIOS: true,
+      shouldDuckAndroid: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+      playThroughEarpieceAndroid: false,
+      staysActiveInBackground: true,
+    });
     
     const { sound, status } = await this.recording.createNewLoadedSoundAsync(
       {
@@ -169,7 +157,7 @@ export default class AudioTrack extends React.Component {
         recordingDuration: status.durationMillis,
       });
       if (!this.state.isLoading) {
-        this._stopRecordingAndEnablePlayback();
+        this.stopRecording();
       }
     }
   };
@@ -186,6 +174,7 @@ export default class AudioTrack extends React.Component {
         volume: status.volume,
         shouldCorrectPitch: status.shouldCorrectPitch,
         isPlaybackAllowed: true,
+        uri: status.uri
       });
     } else {
       // try{
@@ -234,7 +223,6 @@ export default class AudioTrack extends React.Component {
       this.sound.setIsMutedAsync(!this.state.muted);
       if(this.props.shouldMute) {
         this.setShouldMuteToFalse(this.props.id);
-
       }
     }
   };
@@ -248,7 +236,8 @@ export default class AudioTrack extends React.Component {
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
     { this.sound.stopAsync();}
-    let pos = this.state.soundPosition;
+
+    if (this.sound != null && this.sound.isLoaded) console.log(this.sound.uri)
     return(
       <View style={styles.container}>
         <View style={{
@@ -272,8 +261,7 @@ export default class AudioTrack extends React.Component {
           <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
-
-          <Text>{pos}</Text>
+          <Text>{this.state.soundPosition}</Text>
         </View>
       </View>
     );
