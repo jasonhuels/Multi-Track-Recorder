@@ -68,7 +68,10 @@ _An Android multi-track recorder application, designed to allow users to quickly
 #### AudioTrack
 ![AudioTrack Component](AudioTrack.png)
 
+![App Layout](Layout.png)
+
 ## Setup/Installation Requirements_
+_Requirements: Node.js, Expo SDK 33 or higher, Android device or simulator_
 * _Clone this repository_
 * _Navigate to the directory_
 * _Run "npm install" command to install necessary packages_
