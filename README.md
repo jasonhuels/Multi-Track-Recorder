@@ -41,7 +41,7 @@ _An Android multi-track recorder application, designed to allow users to quickly
 - [x] Stop button triggers all tracks to stop
 
 ### Menu Component
-- [ ] Create menu as a modal
+- [x] Create menu as a modal
 - [ ] Save project to local storage
 - [ ] Load saved project from storage
 - [ ] Delete saved project from storage

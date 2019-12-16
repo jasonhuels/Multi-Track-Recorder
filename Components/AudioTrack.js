@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Dimensions, Slider, Alert } from 'react-native';
 import { Audio } from 'expo-av';
-
 const { width: DEVICE_WIDTH, height: DEVICE_HEIGHT } = Dimensions.get('window');
 
 export default class AudioTrack extends React.Component {

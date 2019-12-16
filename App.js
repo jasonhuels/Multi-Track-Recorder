@@ -96,8 +96,10 @@ export default class App extends React.Component {
           </View>
           <Button title="Stop" onPress={() => this.setState({ stopAll: true })} />
           {/* Master Volume Slider */}
-          <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/> 
-          <Button title="Menu" onPress={() => this.setState({menuOpen: !this.state.menuOpen})} />
+          {/* <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/>  */}
+          <View style={{paddingLeft: 50}}>
+            <Button title="Menu" onPress={() => this.setState({menuOpen: !this.state.menuOpen})} />
+          </View>
         </View>
       </View>
     );
