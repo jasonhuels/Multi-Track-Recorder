@@ -237,7 +237,7 @@ export default class AudioTrack extends React.Component {
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
     { this.sound.stopAsync();}
 
-    if (this.sound != null && this.sound.isLoaded) console.log(this.sound.uri)
+
     return(
       <View style={styles.container}>
         <View style={{
