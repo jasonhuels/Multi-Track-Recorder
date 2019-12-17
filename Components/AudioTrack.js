@@ -25,8 +25,10 @@ export default class AudioTrack extends React.Component {
       rate: 1.0,
       uri: null
     };
-    this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY));
+    this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));
     this.recordingSettings.android['extension'] = '.wav';
+    this.recordingSettings.android['sampleRate'] = 5500;
+    this.recordingSettings.android['bitRate'] = 11000; 
   }
   // Use this to update state when props change
   componentDidUpdate() {
@@ -63,6 +65,7 @@ export default class AudioTrack extends React.Component {
       this.setState({
         isRecording: true
       });
+      this.startMasterPlay();
       this.startRecording();
     }
   };
@@ -71,7 +74,7 @@ export default class AudioTrack extends React.Component {
     this.setState({
       isLoading: true,
     });
-    this.startMasterPlay();
+    
     if (this.sound !== null) {
       await this.sound.unloadAsync();
       this.sound.setOnPlaybackStatusUpdate(null);
