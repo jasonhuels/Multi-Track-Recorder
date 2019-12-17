@@ -1,11 +1,11 @@
-# Multi-track Recorder
+# ~~Multi-track Recorder~~ Noise generator
 
-#### _A multi-track recorder react-native application targetting Android_
+#### _A ~~multi-track recorder~~ noise generator react-native application targetting Android_
 
 #### By _**Jason Huels** December 12, 2019_
 
 ## Description
-_An Android multi-track recorder application, designed to allow users to quickly prototype songs._
+_An Android ~~multi-track recorder~~ noise generator application, designed to allow users to quickly prototype ~~songs~~ noise._
 
 ## MVP
 * Ability to record 4 audio tracks from device microphone
@@ -82,6 +82,7 @@ _Requirements: Node.js, Expo SDK 33 or higher, Android device or simulator_
 * Does not function on iPhone
 * Latency in playback of tracks
 * Saving seems to work but can't be found on device
+* Loop stops working at random intervals, not sure why...
 
 ## Support and contact details
 _jasonhuels@yahoo.com_
