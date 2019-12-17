@@ -16,7 +16,8 @@ export default class App extends React.Component {
       masterPlay: false,
       shouldMute: [false, false, false, false],
       stopAll: false,
-      menuOpen: false
+      menuOpen: false,
+
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);

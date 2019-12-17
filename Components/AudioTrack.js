@@ -23,12 +23,14 @@ export default class AudioTrack extends React.Component {
       shouldCorrectPitch: true,
       volume: 1.0,
       rate: 1.0,
-      uri: null
+      uri: null,
+      loop: false
     };
     this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));
     this.recordingSettings.android['extension'] = '.wav';
     this.recordingSettings.android['sampleRate'] = 5500;
-    this.recordingSettings.android['bitRate'] = 11000; 
+    this.recordingSettings.android['bitRate'] = 6000;
+    this.onPressLoopButton = this.onPressLoopButton.bind(this);
   }
   // Use this to update state when props change
   componentDidUpdate() {
@@ -65,6 +67,7 @@ export default class AudioTrack extends React.Component {
       this.setState({
         isRecording: true
       });
+      this.stopMasterPlay();
       this.startMasterPlay();
       this.startRecording();
     }
@@ -234,6 +237,13 @@ export default class AudioTrack extends React.Component {
       this.sound.setVolumeAsync(value);
     }
   };
+
+  onPressLoopButton() {
+    if(this.sound != null) {
+      this.sound.setStatusAsync({ isLooping: !this.sound.isLooping});
+      this.setState({loop: true});
+    }
+  }
   
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
@@ -263,7 +273,9 @@ export default class AudioTrack extends React.Component {
           <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
-          <Text>{this.state.soundPosition}</Text>
+          <View >
+            <Button title="Loop" color={this.state.loop ? 'green' : 'blue'} onPress={this.onPressLoopButton}/>
+          </View>
         </View>
       </View>
     );
