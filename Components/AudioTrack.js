@@ -22,7 +22,7 @@ export default class AudioTrack extends React.Component {
       muted: false,
       shouldCorrectPitch: true,
       volume: 1.0,
-      rate: 1.0,
+      rate: 0.75,
       uri: null,
       loop: false
     };
@@ -49,6 +49,11 @@ export default class AudioTrack extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.sound.stopAsync();
+    this.sound = null;
+  }
+
   stopMasterPlay(){
     this.props.resetMasterPlay(false);
   }
@@ -67,9 +72,19 @@ export default class AudioTrack extends React.Component {
       this.setState({
         isRecording: true
       });
-      this.stopMasterPlay();
       this.startMasterPlay();
       this.startRecording();
+    }
+  };
+
+  onStopPressed = () => {
+    if (this.state.isRecording) {
+      this.setState({
+        isRecording: false
+      });
+      this.stopRecording();
+    } else if(this.sound != null){
+      this.sound.stopAsync();
     }
   };
 
@@ -136,7 +151,7 @@ export default class AudioTrack extends React.Component {
     
     const { sound, status } = await this.recording.createNewLoadedSoundAsync(
       {
-        isLooping: false,
+        isLooping: this.state.loop,
         isMuted: this.state.muted,
         volume: this.state.volume,
         rate: this.state.rate,
@@ -240,8 +255,9 @@ export default class AudioTrack extends React.Component {
 
   onPressLoopButton() {
     if(this.sound != null) {
-      this.sound.setStatusAsync({ isLooping: !this.sound.isLooping});
-      this.setState({loop: true});
+      // this seems counterintuitive but its the only way it works 
+      this.sound.setIsLoopingAsync(!this.state.loop);
+      this.setState({ loop: !this.state.loop });
     }
   }
   
@@ -249,32 +265,38 @@ export default class AudioTrack extends React.Component {
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
     { this.sound.stopAsync();}
 
-
     return(
       <View style={styles.container}>
         <View style={{
           flexDirection: 'row'
         }}>
-          <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
+          <View style={styles.button}>
+            <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
+          </View> 
           {/* Playback Slider */}
-          <Slider disabled='true' style={{width: DEVICE_WIDTH*0.5}}/>
-          <Button title="Play" onPress={this.onPlayPressed}/>
+          <Slider disabled='true' style={{width: DEVICE_WIDTH*0.3}}/>
+          <View style={styles.button}>
+            <Button title="Play" onPress={this.onPlayPressed}/>
+          </View>
+          <View style={styles.button}>
+            <Button title="Stop" onPress={this.onStopPressed} />
+          </View>
         </View>
         <View style={{
           flexDirection: 'row'
         }}>
-          <View style={{padding: 5}}>
+          <View style={styles.button}>
             <Button title="Solo" onPress={this.onSoloPressed}/>
           </View>
-          <View style={{ padding: 5 }}>
+          <View style={styles.button}>
             <Button title="Mute" color={this.state.muted ? 'red' : 'blue'} onPress={this.onMutePressed}/>
           </View>
           {/* Volume Slider */}
           <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
           {/* Panning Slider */}
           {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
-          <View >
-            <Button title="Loop" color={this.state.loop ? 'green' : 'blue'} onPress={this.onPressLoopButton}/>
+          <View style={styles.button}>
+            <Button title="Loop" color={this.state.loop ? 'green' : '#525252'} onPress={this.onPressLoopButton}/>
           </View>
         </View>
       </View>
@@ -295,4 +317,8 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10
   },
+  button: {
+    padding: 5,
+    borderRadius: 10
+  }
 });
