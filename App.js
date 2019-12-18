@@ -17,7 +17,6 @@ export default class App extends React.Component {
       shouldMute: [false, false, false, false],
       stopAll: false,
       menuOpen: false,
-
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);
@@ -90,13 +89,12 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <View>{tracks}</View>
         <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/> 
+        
         <View style={styles.masterControl}>
           <View style={{paddingRight: 10}}>
             <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
           </View>
           <Button title="Stop" onPress={() => this.setState({ stopAll: true })} />
-          {/* Master Volume Slider */}
-          {/* <Slider value={1} style={{ width: DEVICE_WIDTH * 0.4 }}/>  */}
           <View style={{paddingLeft: 50}}>
             <Button title="Menu" onPress={() => this.setState({menuOpen: !this.state.menuOpen})} />
           </View>

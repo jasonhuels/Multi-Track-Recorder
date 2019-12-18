@@ -137,8 +137,6 @@ export default class AudioTrack extends React.Component {
     } catch (error) {
       console.log(error);
     }
-    // const info = await FileSystem.getInfoAsync(this.recording.getURI());
-    // console.log(`FILE INFO: ${JSON.stringify(info)}`);
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
       interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
@@ -197,19 +195,6 @@ export default class AudioTrack extends React.Component {
         isPlaybackAllowed: true,
         uri: status.uri
       });
-    } else {
-      // try{
-      //   this.setState({
-      //     soundDuration: null,
-      //     soundPosition: null,
-      //     isPlaybackAllowed: false,
-      //   });
-      // } catch(err) {
-      //   console.log(err);
-      // }
-      if (status.error) {
-        console.log(`FATAL PLAYER ERROR: ${status.error}`);
-      }
     }
   };
 
@@ -266,8 +251,8 @@ export default class AudioTrack extends React.Component {
     if (this.sound != null) {
       try {
         await this.sound.setRateAsync(rate, shouldCorrectPitch);
-      } catch (error) {
-        // Rate changing could not be performed, possibly because the client's Android API is too old.
+      } catch (err) {
+        console.log(err)
       }
     }
   };
@@ -289,7 +274,6 @@ export default class AudioTrack extends React.Component {
             <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           </View> 
           {/* Playback Slider */}
-          {/* <Slider disabled='true' style={{width: DEVICE_WIDTH*0.3}}/> */}
           <Slider
             style={{ width: DEVICE_WIDTH * 0.3 }}
             value={this.state.rate}
@@ -314,8 +298,6 @@ export default class AudioTrack extends React.Component {
           </View>
           {/* Volume Slider */}
           <Slider value={1} onValueChange={this.onVolumeSliderValueChange} style={{width: DEVICE_WIDTH*0.25} }/>
-          {/* Panning Slider */}
-          {/* <Slider style={{ width: DEVICE_WIDTH * 0.25 }}/> */}
           <View style={styles.button}>
             <Button title="Loop" color={this.state.loop ? 'green' : '#525252'} onPress={this.onPressLoopButton}/>
           </View>
