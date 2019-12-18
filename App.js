@@ -98,7 +98,7 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View>{tracks}</View>
-        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/> 
+        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen} tracksToSave={this.state.savedTracks}/> 
 
         <View style={styles.masterControl}>
           <View style={{paddingRight: 10}}>

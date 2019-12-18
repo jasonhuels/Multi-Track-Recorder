@@ -5,14 +5,18 @@ import * as FileSystem from 'expo-file-system';
 export default class MenuModal extends React.Component {
   state = {
     modalVisible: false,
+    loadedTracks: []
   };
 
   async onPressSaveButton() {
-    console.log(FileSystem.documentDirectory);
-    const fileContents = 'This is a my content.';
+    // const fileContents = 'This is a my content.';
     try {
-      FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/my-file.txt', fileContents);
-      console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + '/my-file.txt'));
+      for (let i = 0; i < this.props.tracksToSave.length; i++) {
+        FileSystem.writeAsStringAsync(FileSystem.documentDirectory + `/track${i}.wav`, this.props.tracksToSave[i]);
+        console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + `/track${i}.wav`));
+      }
+      // FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/my-file.txt', fileContents);
+      //console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + '/my-file.txt'));
     } catch(err) {
       console.log(err)
     }
