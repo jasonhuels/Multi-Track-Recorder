@@ -49,6 +49,10 @@ export default class AudioTrack extends React.Component {
     }
   }
 
+  saveTrack(){
+    this.props.saveTrack(this.props.id, this.sound)
+  }
+
   componentWillUnmount() {
     this.sound.stopAsync();
     this.sound = null;
@@ -159,6 +163,7 @@ export default class AudioTrack extends React.Component {
       this.updateScreenForSoundStatus
     );
     this.sound = sound;
+    this.saveTrack();
     this.setState({
       isLoading: false,
     });

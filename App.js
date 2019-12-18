@@ -17,12 +17,14 @@ export default class App extends React.Component {
       shouldMute: [false, false, false, false],
       stopAll: false,
       menuOpen: false,
+      savedTracks: []
     };
     this.resetMasterPlay = this.resetMasterPlay.bind(this);
     this.resetShouldMute = this.resetShouldMute.bind(this);
     this.setShouldMuteToFalse = this.setShouldMuteToFalse.bind(this);
     this.resetStopAll = this.resetStopAll.bind(this);
     this.resetMenuOpen = this.resetMenuOpen.bind(this);
+    this.getTracksForSaving = this.getTracksForSaving.bind(this);
   }
 
   componentDidMount() {
@@ -71,6 +73,12 @@ export default class App extends React.Component {
     this.setState({ menuOpen: trueOrFalse})
   }
 
+  getTracksForSaving(id, track){
+    let temp = this.state.savedTracks;
+    temp[id] = track;
+    this.setState({ savedTracks: temp});
+  }
+
   render() {
     const tracks = [];
     for(let i=0; i<this.state.numTracks; i++) {
@@ -83,13 +91,15 @@ export default class App extends React.Component {
         setShouldMuteToFalse={this.setShouldMuteToFalse}
         stopAll={this.state.stopAll} 
         resetStopAll={this.resetStopAll}
+        saveTrack={this.getTracksForSaving}
         />
     }
+
     return (
       <View style={styles.container}>
         <View>{tracks}</View>
         <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/> 
-        
+
         <View style={styles.masterControl}>
           <View style={{paddingRight: 10}}>
             <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
