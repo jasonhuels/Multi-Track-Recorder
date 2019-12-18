@@ -22,8 +22,7 @@ export default class AudioTrack extends React.Component {
       muted: false,
       shouldCorrectPitch: true,
       volume: 1.0,
-      rate: 0.75,
-      uri: null,
+      rate: 0.75,      uri: null,
       loop: false
     };
     this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));
