@@ -90,8 +90,7 @@ export default class App extends React.Component {
       <View style={styles.container}>
         <View>{tracks}</View>
         <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen}/> 
-        <View style={{
-          flexDirection: 'row', padding: 20, marginTop: 20, justifyContent: 'center', backgroundColor: '#333'}}>
+        <View style={styles.masterControl}>
           <View style={{paddingRight: 10}}>
             <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
           </View>
@@ -114,4 +113,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  masterControl: {
+    borderWidth: 0.5,
+    borderColor: '#d6d7da',
+    flexDirection: 'row', 
+    padding: 20, 
+    marginTop: 20, 
+    justifyContent: 'center', 
+    backgroundColor: '#333',
+    width: DEVICE_WIDTH * 0.85,
+  }
 });
