@@ -83,6 +83,7 @@ _Requirements: Node.js, Expo SDK 33 or higher, Android device or simulator_
 * Latency in playback of tracks
 * Saving seems to work but can't be found on device
 * Loop stops working at random intervals, not sure why...
+* If running too long, the expo audio player stops working, this may be an expo audio bug. If encountered expo app will need to be restarted as well as this app.
 
 ## Support and contact details
 _jasonhuels@yahoo.com_

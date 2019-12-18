@@ -98,16 +98,16 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         <View>{tracks}</View>
-        <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen} tracksToSave={this.state.savedTracks}/> 
+        {/* <MenuModal menuOpen={this.state.menuOpen} resetMenuOpen={this.resetMenuOpen} tracksToSave={this.state.savedTracks}/>  */}
 
         <View style={styles.masterControl}>
           <View style={{paddingRight: 10}}>
             <Button title="Play" onPress={()=> this.setState({ masterPlay: true })}/>
           </View>
           <Button title="Stop" onPress={() => this.setState({ stopAll: true })} />
-          <View style={{paddingLeft: 50}}>
+          {/* <View style={{paddingLeft: 50}}>
             <Button title="Menu" onPress={() => this.setState({menuOpen: !this.state.menuOpen})} />
-          </View>
+          </View> */}
         </View>
       </View>
     );

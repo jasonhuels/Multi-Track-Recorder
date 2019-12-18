@@ -23,10 +23,20 @@ export default class MenuModal extends React.Component {
   }
   
   async onPressLoadButton() {
-    let content = "";
+    let content = [];
+    let track0 = await FileSystem.getInfoAsync(FileSystem.documentDirectory + `/track0.wav`)
+    console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + `/track0.wav`));
     try{
-      content = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + '/my-file.txt');
-      console.log(content);
+      for(let i=0; i<4; i++) {
+        if (track0.exists) {
+          content[i] = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + `/track${i}.wav`);
+          this.setState({
+            loadedTracks: content
+          })
+        }
+      }
+      // content = await FileSystem.readAsStringAsync(FileSystem.documentDirectory + '/my-file.txt');
+      console.log(this.state.loadedTracks);
     }
     catch(err){
       console.log(err);
