@@ -22,13 +22,14 @@ export default class AudioTrack extends React.Component {
       muted: false,
       shouldCorrectPitch: true,
       volume: 1.0,
-      rate: 0.75,      uri: null,
+      rate: 1.0,
+      uri: null,
       loop: false
     };
     this.recordingSettings = JSON.parse(JSON.stringify(Audio.RECORDING_OPTIONS_PRESET_LOW_QUALITY));
     this.recordingSettings.android['extension'] = '.wav';
     this.recordingSettings.android['sampleRate'] = 5500;
-    this.recordingSettings.android['bitRate'] = 6000;
+    this.recordingSettings.android['bitRate'] = 11000;
     this.onPressLoopButton = this.onPressLoopButton.bind(this);
   }
   // Use this to update state when props change
@@ -259,6 +260,20 @@ export default class AudioTrack extends React.Component {
       this.setState({ loop: !this.state.loop });
     }
   }
+
+  trySetRate = async (rate, shouldCorrectPitch) => {
+    if (this.sound != null) {
+      try {
+        await this.sound.setRateAsync(rate, shouldCorrectPitch);
+      } catch (error) {
+        // Rate changing could not be performed, possibly because the client's Android API is too old.
+      }
+    }
+  };
+
+  onRateSliderSlidingComplete = async value => {
+    this.trySetRate(value, this.state.shouldCorrectPitch);
+  };
   
   render(){
     if (this.sound != null && this.state.soundPosition >= this.state.soundDuration )
@@ -273,7 +288,13 @@ export default class AudioTrack extends React.Component {
             <Button title="Rec" color={this.state.isRecording ? 'red' : 'blue'} onPress={this.onRecordPressed} />
           </View> 
           {/* Playback Slider */}
-          <Slider disabled='true' style={{width: DEVICE_WIDTH*0.3}}/>
+          {/* <Slider disabled='true' style={{width: DEVICE_WIDTH*0.3}}/> */}
+          <Slider
+            style={{ width: DEVICE_WIDTH * 0.3 }}
+            value={this.state.rate}
+            onSlidingComplete={this.onRateSliderSlidingComplete}
+            disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
+          />
           <View style={styles.button}>
             <Button title="Play" onPress={this.onPlayPressed}/>
           </View>
