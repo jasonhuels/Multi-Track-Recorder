@@ -76,7 +76,6 @@ export default class AudioTrack extends React.Component {
       this.setState({
         isRecording: true
       });
-      this.stopMasterPlay();
       this.startMasterPlay();
       this.startRecording();
     }
