@@ -1,6 +1,5 @@
 import React from 'react';
 import { Modal, Text, TouchableHighlight, View, StyleSheet, Button } from 'react-native';
-//import FileSystem from 'react-native-filesystem';
 import * as FileSystem from 'expo-file-system';
 
 export default class MenuModal extends React.Component {
@@ -12,7 +11,6 @@ export default class MenuModal extends React.Component {
     console.log(FileSystem.documentDirectory);
     const fileContents = 'This is a my content.';
     try {
-      //await FileSystem.writeToFile('my-directory/my-file.txt', fileContents);
       FileSystem.writeAsStringAsync(FileSystem.documentDirectory + '/my-file.txt', fileContents);
       console.log(await FileSystem.getInfoAsync(FileSystem.documentDirectory + '/my-file.txt'));
     } catch(err) {
