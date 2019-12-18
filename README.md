@@ -1,11 +1,11 @@
-# ~~Multi-track Recorder~~ Noise generator
+# ~~Multi-track Recorder~~ The Cacophonizer - Noise generator
 
 #### _A ~~multi-track recorder~~ noise generator react-native application targetting Android_
 
 #### By _**Jason Huels** December 12, 2019_
 
 ## Description
-_An Android ~~multi-track recorder~~ noise generator application, designed to allow users to quickly prototype ~~songs~~ noise._
+An Android ~~multi-track recorder~~ noise generator application, designed to allow users to quickly prototype ~~songs~~ noise. All the pretension of a noise band at your fingertips.
 
 ## MVP
 * Ability to record 4 audio tracks from device microphone
@@ -18,7 +18,7 @@ _An Android ~~multi-track recorder~~ noise generator application, designed to al
 * Record button punch-in
 * Panning controls for each track
 * Solo/Mute buttons for each track
-* Each track can be exported in uncompressed format (wav/aac)
+* Each track can be exported in uncompressed format (wav)
 * Audio tracks can be recorded from direct input (will require a preamp)
 * Metronome with adjustable BPM
 * Tuner 
@@ -78,12 +78,23 @@ _Requirements: Node.js, Expo SDK 33 or higher, Android device or simulator_
 * _Run "expo start" to start the server_
 * _Use the expo app on your Android device to scan the QR code and launch the application_
 
+## How to Use
+* Rather than using the tracks for serarate audio recordings, use them to further degrade the quality of the sound and create a horrible cacophony.
+* Adjust the playback rate to further degrade the sound.
+* Adjust the volume of the playback tracks to reduce feeback on the recording track, unless you really want to make people's ears bleed. 
+* Use the loop button to continuously playback a track to make droning tones
+* Use the mute/solo buttons to only playback the tracks you want to hear.
+
+## Celebrity Endorsements
+![Fake endorsement](mike-patton.jpg)
+
 ## Known Bugs
 * Does not function on iPhone
 * Latency in playback of tracks
 * Saving seems to work but can't be found on device
 * Loop stops working at random intervals, not sure why...
 * If running too long, the expo audio player stops working, this may be an expo audio bug. If encountered expo app will need to be restarted as well as this app.
+* Dogs don't like it
 
 ## Support and contact details
 _jasonhuels@yahoo.com_

@@ -263,7 +263,7 @@ export default class AudioTrack extends React.Component {
   };
 
   onRateSliderSlidingComplete = async value => {
-    this.trySetRate(value, this.state.shouldCorrectPitch);
+    this.trySetRate(value * 2.0, this.state.shouldCorrectPitch);
   };
   
   render(){
@@ -281,7 +281,7 @@ export default class AudioTrack extends React.Component {
           {/* Playback Slider */}
           <Slider
             style={{ width: DEVICE_WIDTH * 0.3 }}
-            value={this.state.rate}
+            value={this.state.rate / 2.0}
             onSlidingComplete={this.onRateSliderSlidingComplete}
             disabled={!this.state.isPlaybackAllowed || this.state.isLoading}
           />
